@@ -1,4 +1,16 @@
 # Caesar Cipher.py
+import nltk
+import string
+from nltk.corpus import brown
+from collections import Counter
+from nltk.tokenize import word_tokenize
+
+nltk.download('brown')
+nltk.download('universal_tagset')
+
+words = brown.words()
+word_freq = Counter(words)
+top_5000 = [word for word, freq in word_freq.most_common(5000)]
 
 while True:
     print("\n请选择操作：")
@@ -19,7 +31,13 @@ while True:
                     result += chr((ord(char) - ord('a') - k) % 26 + ord('a'))
                 else:
                     result += char
-            print(f"偏移量 {k:2d}: {result}")
+
+            clean_text = ''.join(
+                char for char in result if char not in string.punctuation)
+            tokens = word_tokenize(clean_text)
+            if len(set(top_5000) & set(tokens)) > 0:
+                print("*******以下为可能有意义的结果*******")
+            print(f"偏移量 {k:2d}: {result} \n")
     else:  # 加密或解密
         if choice == '1':
             mode = "加密"
