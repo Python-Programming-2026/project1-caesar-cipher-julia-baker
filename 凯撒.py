@@ -12,6 +12,8 @@ words = brown.words()
 word_freq = Counter(words)
 top_5000 = [word for word, freq in word_freq.most_common(5000)]
 
+# 以上是生成词频前5000英语单词的代码
+
 while True:
     print("\n请选择操作：")
     print("1. 加密")
@@ -32,8 +34,10 @@ while True:
                 else:
                     result += char
 
+            # 清除标点符号，以防干扰
             clean_text = ''.join(
                 char for char in result if char not in string.punctuation)
+            # 分词
             tokens = word_tokenize(clean_text)
             if len(set(top_5000) & set(tokens)) > 0:
                 print("*******以下为可能有意义的结果*******")
